@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware # Added this import
 
-from app.api.routers import tasts
+from app.api.routers import tasts, kes
 
 app = FastAPI(title="FIPI Bank Solve Platform")
 
@@ -16,6 +16,7 @@ app.add_middleware(
 )
 
 app.include_router(tasts.router, prefix="/api/v1", tags=["tasks"])
+app.include_router(kes.router, prefix="/api/v1", tags=["kes"])
 
 @app.get("/")
 def read_root():

@@ -38,3 +38,10 @@ class AnswerCheckResponse(BaseModel):
     guid: str
     result: str # "correct", "incorrect", "error"
     user_answer: str
+
+class TaskListResponse(BaseModel):
+    """
+    Схема для ответа со списком задач и общим количеством.
+    """
+    tasks: List[Task]
+    total: int

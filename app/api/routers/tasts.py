@@ -10,15 +10,16 @@ from app.parser.src.models import Task as ParserTask, TaskType
 
 router = APIRouter()
 
-@router.get("/tasks/", response_model=List[tasks_schema.Task])
+@router.get("/tasks/", response_model=tasks_schema.TaskListResponse)
 def read_tasks(
     db: Session = Depends(get_db), 
     skip: int = 0, 
     limit: int = 100, 
-    kes_code: Optional[str] = None
+    kes_code: Optional[str] = None,
+    task_type_filter: Optional[str] = None  # short-answer or not-short-answer
 ):
     """
-    Получить список задач с возможностью пагинации и фильтрации по коду КЭС.
+    Получить список задач с возможностью пагинации и фильтрации по коду КЭС и типу.
     """
     query = db.query(models.Task)
     
@@ -26,9 +27,17 @@ def read_tasks(
     if kes_code:
         # Ищем задачи, у которых в JSON-списке kes_codes содержится нужная строка
         query = query.filter(models.Task.kes_codes.contains(kes_code))
-        
+
+    if task_type_filter:
+        if task_type_filter == 'short-answer':
+            query = query.filter(models.Task.task_type == 'short_answer')
+        elif task_type_filter == 'not-short-answer':
+            query = query.filter(models.Task.task_type != 'short_answer')
+    
+    total = query.count()
     tasks = query.offset(skip).limit(limit).all()
-    return tasks
+
+    return tasks_schema.TaskListResponse(tasks=tasks, total=total)
 
 @router.get("/tasks/{task_id}", response_model=tasks_schema.Task)
 def read_task(task_id: int, db: Session = Depends(get_db)):
