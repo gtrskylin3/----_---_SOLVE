@@ -38,6 +38,7 @@ class AnswerCheckResponse(BaseModel):
     guid: str
     result: str # "correct", "incorrect", "error"
     user_answer: str
+    solved_tasks: Optional[List[int]] = None
 
 class TaskListResponse(BaseModel):
     """

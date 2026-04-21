@@ -36,7 +36,7 @@
         <p class="text-[#9ca3af] mb-4">Задания, соответствующие текущим фильтрам, не найдены. Попробуйте изменить настройки фильтра.</p>
     </div>
     <div v-else class="space-y-4">
-      <TaskCard v-for="task in tasks" :key="task.guid" :task="task" />
+      <TaskCard v-for="task in tasks" :key="task.guid" :task="task" @task-solved="getTasks" />
     </div>
 
     <!-- Pagination -->

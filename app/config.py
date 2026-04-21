@@ -4,9 +4,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=BASE_DIR / ".env", extra="ignore")
     BASE_DIR: Path = BASE_DIR
     DATABASE_URL: str = f"sqlite:///{BASE_DIR}/fipi_tasks.db"
     PARSER_DATA_PATH: Path = BASE_DIR / "parser" / "data"/ "math_tasks.json"
+    SECRET_KEY: str
 
 # class AISettings(BaseSettings):
 #     model_config = SettingsConfigDict(env_file=BASE_DIR/".env", extra="ignore")
