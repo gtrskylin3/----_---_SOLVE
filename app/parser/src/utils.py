@@ -4,6 +4,7 @@ Utilities for file and data handling.
 import json
 import re
 from typing import List
+from bs4 import BeautifulSoup # Added this import
 from .models import Task
 
 
@@ -50,3 +51,15 @@ def clean_text(text: str) -> str:
     # Replace non-breaking spaces
     text = text.replace('&nbsp;', ' ')
     return text
+
+
+def remove_mathml_prefix(html_content: str) -> str:
+    """
+    Removes 'm:' prefix from MathML tags in the given HTML content.
+    For example, changes '<m:math>' to '<math>'.
+    """
+    soup = BeautifulSoup(html_content, 'html.parser')
+    for tag in soup.find_all(True):  # find_all(True) gets all tags
+        if tag.name and tag.name.startswith('m:'):
+            tag.name = tag.name[2:]  # Remove 'm:' prefix
+    return str(soup)
