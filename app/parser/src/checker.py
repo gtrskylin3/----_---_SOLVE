@@ -6,15 +6,15 @@ from typing import Any
 import requests
 import urllib3
 
-# Отключение предупреждений о SSL
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 from .config import (
     BASE_URL, SOLVE_ENDPOINT, SUBJECTS,
-    REQUEST_TIMEOUT, REQUEST_DELAY, HEADERS, RESULT_CODES
+    REQUEST_TIMEOUT, REQUEST_DELAY, HEADERS, RESULT_CODES, QUESTIONS_ENDPOINT
 )
 from .models import Task, TaskType, CheckResult, CheckResponse
 
+
+# Отключение предупреждений о SSL
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class FIPIChecker:
     """Проверка решений заданий ФИПИ"""
@@ -35,7 +35,21 @@ class FIPIChecker:
         
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
-    
+        self._initialize_session()
+
+    def _initialize_session(self):
+        """
+        "Прогревает" сессию, делая GET-запрос к странице с вопросами,
+        чтобы получить необходимые cookies для последующей проверки.
+        """
+        try:
+            url = f"{BASE_URL}{QUESTIONS_ENDPOINT}"
+            params = {'proj': self.project_id}
+            self.session.get(url, params=params, timeout=REQUEST_TIMEOUT, verify=False)
+            print("Сессия инициализирована.")
+        except requests.RequestException as e:
+            print(f"Ошибка при инициализации сессии: {e}")
+
     def format_answer_for_check(self, task: Task, user_input: Any) -> str:
         """
         Форматировать ответ пользователя в строку для отправки на сервер
@@ -128,12 +142,16 @@ class FIPIChecker:
             )
             response.raise_for_status()
             
+            # Принудительно устанавливаем правильную кодировку
+            response.encoding = 'windows-1251'
+
             # Задержка между запросами
             time.sleep(REQUEST_DELAY)
-            
             # Обработка ответа
             result_code = response.text.strip()
             result = self._parse_result_code(result_code)
+            if task.task_type == TaskType.SHORT_ANSWER and result == CheckResult.PARTIALLY_CORRECT:
+                result = CheckResult.CORRECT
             
             return CheckResponse(
                 guid=task.guid,

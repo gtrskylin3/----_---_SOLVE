@@ -25,3 +25,16 @@ class Task(TaskBase):
     class Config:
         from_attributes = True
 
+class AnswerCheckRequest(BaseModel):
+    """
+    Схема для запроса на проверку ответа.
+    """
+    answer: str
+
+class AnswerCheckResponse(BaseModel):
+    """
+    Схема для ответа с результатом проверки.
+    """
+    guid: str
+    result: str # "correct", "incorrect", "error"
+    user_answer: str
