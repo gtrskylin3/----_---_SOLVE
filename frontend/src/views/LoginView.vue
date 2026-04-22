@@ -5,15 +5,15 @@
       <form @submit.prevent="handleLogin">
         <div class="space-y-4">
           <div>
-            <label for="email" class="block text-sm font-medium text-muted-foreground mb-1">Email</label>
+            <label for="email" class="block text-sm font-medium text-[color:var(--color-muted-foreground)] mb-1">Email</label>
             <input type="email" id="email" v-model="email" class="input-field" required>
           </div>
           <div>
-            <label for="password" class="block text-sm font-medium text-muted-foreground mb-1">Пароль</label>
+            <label for="password" class="block text-sm font-medium text-[color:var(--color-muted-foreground)] mb-1">Пароль</label>
             <input type="password" id="password" v-model="password" class="input-field" required>
           </div>
         </div>
-        <div v-if="authStore.authError" class="mt-4 text-center text-destructive">
+        <div v-if="authStore.authError" class="mt-4 text-center text-[color:var(--color-destructive)]">
           {{ authStore.authError }}
         </div>
         <div class="mt-6">
@@ -22,7 +22,7 @@
           </button>
         </div>
         <div class="mt-4 text-center text-sm">
-          <router-link to="/register" class="text-indigo-400 hover:text-indigo-300">
+          <router-link to="/register" class="text-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]/90">
             Нет аккаунта? Зарегистрироваться
           </router-link>
         </div>

@@ -5,19 +5,19 @@
       <form @submit.prevent="handleRegister">
         <div class="space-y-4">
           <div>
-            <label for="nickname" class="block text-sm font-medium text-muted-foreground mb-1">Никнейм</label>
+            <label for="nickname" class="block text-sm font-medium text-[color:var(--color-muted-foreground)] mb-1">Никнейм</label>
             <input type="text" id="nickname" v-model="nickname" class="input-field" required>
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-muted-foreground mb-1">Email</label>
+            <label for="email" class="block text-sm font-medium text-[color:var(--color-muted-foreground)] mb-1">Email</label>
             <input type="email" id="email" v-model="email" class="input-field" required>
           </div>
           <div>
-            <label for="password" class="block text-sm font-medium text-muted-foreground mb-1">Пароль</label>
+            <label for="password" class="block text-sm font-medium text-[color:var(--color-muted-foreground)] mb-1">Пароль</label>
             <input type="password" id="password" v-model="password" class="input-field" required>
           </div>
         </div>
-        <div v-if="authStore.authError" class="mt-4 text-center text-destructive">
+        <div v-if="authStore.authError" class="mt-4 text-center text-[color:var(--color-destructive)]">
           {{ authStore.authError }}
         </div>
         <div class="mt-6">
@@ -26,7 +26,7 @@
           </button>
         </div>
         <div class="mt-4 text-center text-sm">
-          <router-link to="/login" class="text-indigo-400 hover:text-indigo-300">
+          <router-link to="/login" class="text-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]/90">
             Уже есть аккаунт? Войти
           </router-link>
         </div>
