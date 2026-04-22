@@ -15,6 +15,7 @@ class UserUpdate(schemas.BaseUserUpdate):
 class DashboardStats(schemas.BaseModel):
     total_solved: int
     solved_by_kes: Dict[str, int]
+    total_tasks: int
 
 class MarkTaskDoneRequest(schemas.BaseModel):
     task_id: int

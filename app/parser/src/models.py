@@ -51,6 +51,7 @@ class Task:
     guid: str
     task_id: str  # Публичный номер (например, 0FDA4F)
     subject: str
+    part: int
     task_type: TaskType
     question_text: str
     question_html: str

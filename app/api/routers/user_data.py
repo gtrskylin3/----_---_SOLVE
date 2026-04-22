@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, func # Added func
 from typing import List
 from collections import defaultdict
 
 from app.auth import current_required_user
 from app.database import models
 from app.database.models.users import User
+from app.database.models.tasks import Task # Added Task
 from app.database.session import get_async_session
 from app.schemas import tasks as tasks_schema
 from app.schemas.users import DashboardStats, MarkTaskDoneRequest
@@ -46,8 +47,12 @@ async def get_dashboard_stats(
     solved_task_ids = user.solved_tasks
     total_solved = len(solved_task_ids)
 
+    # Calculate total number of tasks
+    total_tasks_stmt = select(func.count(Task.id))
+    total_tasks = (await db.execute(total_tasks_stmt)).scalar_one()
+
     if not solved_task_ids:
-        return DashboardStats(total_solved=0, solved_by_kes={})
+        return DashboardStats(total_solved=0, solved_by_kes={}, total_tasks=total_tasks)
 
     # Fetch solved tasks to get their KES codes
     stmt = select(models.Task).filter(models.Task.id.in_(solved_task_ids))
@@ -62,7 +67,11 @@ async def get_dashboard_stats(
                 main_kes_part = kes_code.split(' ')[0]
                 solved_by_kes[main_kes_part] += 1
         
-    return DashboardStats(total_solved=total_solved, solved_by_kes=solved_by_kes)
+    return DashboardStats(
+        total_solved=total_solved, 
+        solved_by_kes=solved_by_kes, 
+        total_tasks=total_tasks
+    )
 
 
 @router.get("/me/solved-tasks", response_model=List[tasks_schema.Task])

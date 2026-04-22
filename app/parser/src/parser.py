@@ -11,6 +11,7 @@ import urllib3
 # Отключение предупреждений о SSL (для обхода проблем с сертификатом ФИПИ)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+from app.utils.classify_tasks import get_part
 from .config import (
     BASE_URL, QUESTIONS_ENDPOINT, SUBJECTS, 
     DEFAULT_PAGE_SIZE, REQUEST_TIMEOUT, REQUEST_DELAY, HEADERS
@@ -96,6 +97,9 @@ class FIPIParser:
             question_html = remove_mathml_prefix(question_html)
             question_text = clean_text(cell0.get_text())
             
+            # Определение части (1 или 2)
+            part = get_part({"question_text": question_text})
+
             # Извлечение изображений
             images = extract_image_urls_from_html(question_html)
             
@@ -114,6 +118,7 @@ class FIPIParser:
                 guid=guid,
                 task_id=task_id,
                 subject=self.subject_name,
+                part=part,
                 task_type=task_type,
                 question_text=question_text,
                 question_html=question_html,

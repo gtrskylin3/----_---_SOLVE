@@ -179,3 +179,15 @@ body {
 .focus\:ring-2:focus {
   @apply ring-2 ring-indigo-500 ring-offset-2 ring-offset-[#0a0a0a];
 }
+/* .prose {
+  color: var(--color-foreground);
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: default;
+} */

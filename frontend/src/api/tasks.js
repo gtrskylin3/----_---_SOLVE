@@ -1,9 +1,9 @@
 import apiFetch from '.';
 
-export async function fetchTasks(kes_code = null, task_type_filter = null, skip = 0, limit = 15) {
+export async function fetchTasks(kes_code = null, part_filter = null, skip = 0, limit = 15) {
   const params = new URLSearchParams();
   if (kes_code) params.append('kes_code', kes_code);
-  if (task_type_filter) params.append('task_type_filter', task_type_filter);
+  if (part_filter) params.append('part_filter', part_filter);
   params.append('skip', skip);
   params.append('limit', limit);
   return await apiFetch(`/api/v1/tasks/?${params.toString()}`);

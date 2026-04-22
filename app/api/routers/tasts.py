@@ -23,6 +23,7 @@ async def read_tasks(
     limit: int = 15, # Changed default to 15
     kes_code: Optional[str] = None,
     task_type_filter: Optional[str] = None,
+    part_filter: Optional[int] = None,
 ):
     """
     Получить список задач с возможностью пагинации и фильтрации.
@@ -38,6 +39,9 @@ async def read_tasks(
             query = query.where(models.Task.task_type == 'short_answer')
         elif task_type_filter == 'not-short-answer':
             query = query.where(models.Task.task_type != 'short_answer')
+    
+    if part_filter:
+        query = query.where(models.Task.part == part_filter)
     
     if user and user.solved_tasks:
         query = query.where(models.Task.id.notin_(user.solved_tasks))
@@ -83,7 +87,7 @@ async def check_task_answer(
     
     parser_task = ParserTask(
         guid=db_task.guid, task_id=db_task.task_id, subject=db_task.subject,
-        task_type=TaskType(db_task.task_type), question_text=db_task.question_text,
+        part=db_task.part,task_type=TaskType(db_task.task_type), question_text=db_task.question_text,
         question_html=db_task.question_html
     )
 

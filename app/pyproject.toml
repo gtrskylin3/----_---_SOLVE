@@ -15,4 +15,5 @@ dependencies = [
     "tqdm>=4.67.3",
     "openai>=2.32.0",
     "fastapi-users[sqlalchemy]>=15.0.5",
+    "aiosqlite>=0.22.1",
 ]

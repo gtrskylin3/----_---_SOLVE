@@ -1,4 +1,4 @@
-from sqlalchemy import String, JSON, Text
+from sqlalchemy import String, JSON, Text, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database.models.base import Base
@@ -18,6 +18,9 @@ class Task(Base):
     # Предмет (например, 'math_prof')
     subject: Mapped[str] = mapped_column(String, index=True)
     
+    # Часть задания (1 или 2)
+    part: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+
     # Тип задания ('short_answer', 'multiple_choice', и т.д.)
     task_type: Mapped[str] = mapped_column(String, index=True)
     

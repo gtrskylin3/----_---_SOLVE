@@ -8,6 +8,7 @@ class TaskBase(BaseModel):
     guid: str
     task_id: str
     subject: str
+    part: int
     task_type: str
     question_text: str
     question_html: str

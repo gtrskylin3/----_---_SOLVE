@@ -31,6 +31,7 @@ def load_data_from_json():
                     task_id=task_dict["task_id"],
                     subject=task_dict["subject"],
                     task_type=task_dict["task_type"],
+                    part=task_dict["part"],
                     question_text=task_dict["question_text"],
                     question_html=task_dict["question_html"],
                     answer_unit=task_dict.get("answer_unit"), # Используем .get для необязательных полей
@@ -54,17 +55,13 @@ def load_data_from_json():
         db.close()
 
 
-def create_database_tables():
-    """
-    Создает все таблицы в базе данных на основе моделей SQLAlchemy.
-    """
-    print("Создание таблиц в базе данных (если они не существуют)...")
-    Base.metadata.create_all(bind=engine)
-    print("[OK] Таблицы успешно созданы.")
+async def create_database_tables_async():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)  # ✅ run_sync обёртка
 
-
+import asyncio
 if __name__ == "__main__":
     # 1. Создаем таблицы
-    create_database_tables()
+    asyncio.run(create_database_tables_async())
     # 2. Загружаем данные
     load_data_from_json()

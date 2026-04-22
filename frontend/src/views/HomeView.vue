@@ -13,8 +13,8 @@
         <label class="block text-sm font-medium text-muted-foreground mb-1">Фильтр по части</label>
         <div class="flex gap-2">
           <button @click="setTaskTypeFilter('')" :class="['filter-btn', { 'active': taskTypeFilter === '' }]">Все части</button>
-          <button @click="setTaskTypeFilter('short-answer')" :class="['filter-btn', { 'active': taskTypeFilter === 'short-answer' }]">Часть 1</button>
-          <button @click="setTaskTypeFilter('not-short-answer')" :class="['filter-btn', { 'active': taskTypeFilter === 'not-short-answer' }]">Часть 2</button>
+          <button @click="setTaskTypeFilter(1)" :class="['filter-btn', { 'active': taskTypeFilter === 1 }]">Часть 1</button>
+          <button @click="setTaskTypeFilter(2)" :class="['filter-btn', { 'active': taskTypeFilter === 2 }]">Часть 2</button>   
         </div>
       </div>
     </div>
