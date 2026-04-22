@@ -7,7 +7,7 @@
             <div v-html="task.question_html"></div>
           </div>
           <div v-if="processedImages.length > 0" class="flex-shrink-0">
-            <img v-for="(image, index) in processedImages" :key="index" :src="image" alt="Изображение к заданию" class="max-w-xs h-auto object-contain rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-card)]">
+            <img v-for="(image, index) in processedImages" :key="index" :src="image" alt="Изображение к заданию" class="max-w-xs h-auto object-contain rounded-lg border border-[color:var(--color-border)] bg-white">
           </div>
         </div>
 

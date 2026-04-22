@@ -98,11 +98,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-auto border-t border-[color:var(--color-border)] bg-[color:var(--color-card)] py-6">
+    <!-- <footer class="mt-auto border-t border-[color:var(--color-border)] bg-[color:var(--color-card)] py-6">
       <div class="container mx-auto px-4 text-center text-sm text-[color:var(--color-muted-foreground)]">
-        © 2024 FIPI Bank. All rights reserved.
       </div>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
