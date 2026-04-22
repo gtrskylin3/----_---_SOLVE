@@ -16,7 +16,7 @@ from .config import (
     DEFAULT_PAGE_SIZE, REQUEST_TIMEOUT, REQUEST_DELAY, HEADERS
 )
 from .models import Task, TaskType, AnswerVariant, MatchingOption, MatchingChoice
-from .utils import save_tasks_to_json, extract_image_urls_from_html, clean_text
+from .utils import save_tasks_to_json, extract_image_urls_from_html, clean_text, remove_mathml_prefix
 
 
 class FIPIParser:
@@ -93,6 +93,7 @@ class FIPIParser:
                 return None
             
             question_html = str(cell0)
+            question_html = remove_mathml_prefix(question_html)
             question_text = clean_text(cell0.get_text())
             
             # Извлечение изображений

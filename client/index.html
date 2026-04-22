@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIPI Math Task Viewer</title>
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']]
+            },
+            // Configure MathML to be parsed directly
+            mathml: {
+                renderer: "CHTML" // or "SVG"
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .task-container { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .task-question { font-size: 1.1em; margin-bottom: 10px; }
+        .task-id { font-weight: bold; }
+        pre { background-color: #eee; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>FIPI Math Task Viewer</h1>
+    <p>This page demonstrates how to display tasks from your FastAPI backend with MathML rendered by MathJax.</p>
+    
+    <div id="tasks-list">
+        <!-- Tasks will be loaded here -->
+        <p>Loading tasks...</p>
+    </div>
+
+    <script>
+        async function fetchAndDisplayTasks() {
+            const tasksListDiv = document.getElementById('tasks-list');
+            tasksListDiv.innerHTML = '<p>Fetching tasks from API...</p>';
+
+            try {
+                // Adjust the API endpoint if your FastAPI runs on a different port or path
+                const response = await fetch('http://127.0.0.1:8000/api/v1/tasks/'); 
+                const tasks = await response.json();
+
+                if (tasks.length === 0) {
+                    tasksListDiv.innerHTML = '<p>No tasks found. Please ensure your parser has run and tasks are loaded into the database.</p>';
+                    return;
+                }
+
+                tasksListDiv.innerHTML = ''; // Clear loading message
+
+                tasks.forEach(task => {
+                    const taskContainer = document.createElement('div');
+                    taskContainer.className = 'task-container';
+                    
+                    const taskId = document.createElement('div');
+                    taskId.className = 'task-id';
+                    taskId.textContent = `Task ID: ${task.task_id} (GUID: ${task.guid})`;
+                    taskContainer.appendChild(taskId);
+
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'task-question';
+                    // Directly insert the cleaned HTML
+                    questionDiv.innerHTML = task.question_html; 
+                    taskContainer.appendChild(questionDiv);
+
+                    tasksListDiv.appendChild(taskContainer);
+                });
+
+                // Tell MathJax to process the newly added content
+                if (window.MathJax) {
+                    MathJax.typesetPromise();
+                }
+
+            } catch (error) {
+                tasksListDiv.innerHTML = `<p style="color: red;">Error fetching tasks: ${error.message}</p>
+                                          <p>Ensure your FastAPI backend is running at <code>http://127.0.0.1:8000</code> and accessible.</p>
+                                          <p>You can run it with: <code>uvicorn app.main:app --reload</code> in the project root.</p>
+                                          <p>Also, make sure you have parsed tasks into your database (<code>python app/parser/run_parse.py</code> followed by <code>python app/utils/load_json_to_db.py</code>).</p>`;
+                console.error('Error fetching tasks:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchAndDisplayTasks);
+    </script>
+</body>
+</html>

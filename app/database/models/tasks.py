@@ -19,7 +19,7 @@ class Task(Base):
     subject: Mapped[str] = mapped_column(String, index=True)
     
     # Тип задания ('short_answer', 'multiple_choice', и т.д.)
-    task_type: Mapped[str] = mapped_column(String)
+    task_type: Mapped[str] = mapped_column(String, index=True)
     
     # Текстовое представление вопроса
     question_text: Mapped[str] = mapped_column(Text)

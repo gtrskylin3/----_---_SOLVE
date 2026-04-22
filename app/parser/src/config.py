@@ -4,6 +4,7 @@
 
 # Базовый URL
 BASE_URL = "https://ege.fipi.ru"
+FIPI_DATA_BASE_URL = "https://ege.fipi.ru/data/" # Added this line
 
 # API эндпоинты
 QUESTIONS_ENDPOINT = "/bank/questions.php"
