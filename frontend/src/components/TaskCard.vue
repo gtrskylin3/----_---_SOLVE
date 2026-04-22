@@ -3,11 +3,11 @@
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
       <div class="flex-1">
         <div class="flex flex-col md:flex-row gap-8 items-start">
-          <div class="question-html prose prose-invert prose-lg max-w-none flex-1">
+          <div class="question-html prose max-w-none flex-1">
             <div v-html="task.question_html"></div>
           </div>
           <div v-if="processedImages.length > 0" class="flex-shrink-0">
-            <img v-for="(image, index) in processedImages" :key="index" :src="image" alt="Изображение к заданию" class="max-w-xs h-auto object-contain rounded-lg border border-border bg-white">
+            <img v-for="(image, index) in processedImages" :key="index" :src="image" alt="Изображение к заданию" class="max-w-xs h-auto object-contain rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-card)]">
           </div>
         </div>
 
@@ -148,9 +148,9 @@ const resultMessage = computed(() => {
 const resultClass = computed(() => {
   if (!checkResult.value) return '';
   switch (checkResult.value.result) {
-    case 'correct': return 'bg-emerald-900/50 text-emerald-300 border border-emerald-800';
-    case 'incorrect': return 'bg-rose-900/50 text-rose-300 border border-rose-800';
-    default: return 'bg-amber-900/50 text-amber-300 border border-amber-800';
+    case 'correct': return 'bg-[color:var(--color-success)]/20 text-[color:var(--color-success-foreground)] border border-[color:var(--color-success)]/30';
+    case 'incorrect': return 'bg-[color:var(--color-destructive)]/20 text-[color:var(--color-destructive-foreground)] border border-[color:var(--color-destructive)]/30';
+    default: return 'bg-amber-500/20 text-amber-300 border border-amber-800';
   }
 });
 
@@ -167,24 +167,9 @@ const markDoneResultMessage = computed(() => {
 const markDoneResultClass = computed(() => {
   if (!markDoneResult.value) return '';
   switch (markDoneResult.value.result) {
-    case 'correct': return 'bg-emerald-900/50 text-emerald-300 border border-emerald-800';
-    case 'error': return 'bg-rose-900/50 text-rose-300 border border-rose-800';
+    case 'correct': return 'bg-[color:var(--color-success)]/20 text-[color:var(--color-success-foreground)] border border-[color:var(--color-success)]/30';
+    case 'error': return 'bg-[color:var(--color-destructive)]/20 text-[color:var(--color-destructive-foreground)] border border-[color:var(--color-destructive)]/30';
     default: return '';
   }
 });
 </script>
-
-<style scoped>
-.prose {
-  color: var(--color-foreground);
-}
-
-.btn-success {
-  background-color: #10b981;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: default;
-}
-</style>
