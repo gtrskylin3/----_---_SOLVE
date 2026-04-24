@@ -33,10 +33,10 @@ async def get_user_db(session: AsyncSession = Depends(get_async_session)):
 async def get_user_manager(user_db=Depends(get_user_db)):
     yield UserManager(user_db)
 
-cookie_transport = CookieTransport(cookie_name="fipi_cookie", cookie_max_age=604800) # 7 days
+cookie_transport = CookieTransport(cookie_name="fipi_cookie", cookie_max_age=604800*6, cookie_samesite='none') # 7 days
 
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=SECRET, lifetime_seconds=604800) # 7 days
+    return JWTStrategy(secret=SECRET, lifetime_seconds=604800*6) # 7 days
 
 auth_backend = AuthenticationBackend(
     name="jwt", # Use "jwt" as the name for the strategy
