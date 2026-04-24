@@ -2,29 +2,45 @@
 
 @layer base {
   :root {
-    --radius: 0.5rem;
-    /* Light Theme Counterparts */
-    --background: #ffffff;
-    --foreground: #000000;
-    --card: #fafafa;
-    --card-hover: #f0f0f0;
-    --input-bg: #f5f5f5;
-    --border-light: #e5e5e5; /* for #222 */
-    --border-dark: #cccccc;  /* for #333 */
-    --muted: #f5f5f5;      /* for #1a1a1a */
-    --muted-hover: #e5e5e5;/* for #222 */
-    --link-hover-bg: #f5f5f5;
-    --scrollbar-track: #fafafa;
-    --scrollbar-thumb: #e5e5e5;
-    --scrollbar-thumb-hover: #cccccc;
-    --overlay: hsl(0 0% 0% / 0.7);
-    --accent: #4f46e5; /* Indigo 600 for light theme */
+    --radius: 0.625rem;
+
+    /* Background system (softened) */
+    --background: #f9fafb;        /* вместо чистого белого */
+    --foreground: #111827;        /* мягкий почти-чёрный */
+
+    /* Surfaces */
+    --card: #ffffff;
+    --card-hover: #f3f4f6;
+
+    --input-bg: #f3f4f6;
+
+    /* Borders (less harsh) */
+    --border-light: #e5e7eb;
+    --border-dark: #d1d5db;
+
+    /* Muted areas */
+    --muted: #f3f4f6;
+    --muted-hover: #e5e7eb;
+
+    --link-hover-bg: #eef2ff;
+
+    /* Scrollbar */
+    --scrollbar-track: #f9fafb;
+    --scrollbar-thumb: #d1d5db;
+    --scrollbar-thumb-hover: #9ca3af;
+
+    /* Overlay (slightly stronger for readability) */
+    --overlay: hsl(0 0% 0% / 0.55);
+
+    /* Accent (more modern indigo-blue) */
+    --accent: #6366f1;
     --accent-foreground: #ffffff;
   }
+}
 
   .dark {
     /* Dark Theme - from your original design */
-    --background: #212121;
+    --background: #191919;
     --foreground: #f0f0f0;
     --card: #0a0a0a;
     --card-hover: #111111;

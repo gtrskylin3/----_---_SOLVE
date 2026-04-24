@@ -46,7 +46,7 @@ DEFAULT_PAGE_SIZE = 10
 DATA_DIR = "data"
 
 # Таймауты и задержки (в секундах)
-REQUEST_TIMEOUT = 30
+REQUEST_TIMEOUT = 120
 REQUEST_DELAY = 1.0  # Задержка между запросами
 
 # Заголовки для запросов
