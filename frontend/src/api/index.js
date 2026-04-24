@@ -1,7 +1,7 @@
 // src/api/index.js
 import { useAuthStore } from '@/stores/auth.js';
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'https://fipi-bank-solve.onrender.com';
 
 async function apiFetch(url, options = {}) {
   const defaultOptions = {
